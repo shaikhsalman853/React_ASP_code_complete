@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -22,6 +22,13 @@ const navigate = useNavigate();
     handleSubmit,
     formState: { errors },
   } = useForm();
+  useEffect(() => {
+  // Clear session storage
+  sessionStorage.clear();
+  // Clear local storage
+  localStorage.clear();
+
+}, []);
 
 const onSubmit = async (data) => {
   try {
@@ -41,7 +48,6 @@ const onSubmit = async (data) => {
     const responseData = response.data;
 
     if (responseData.isSuccess) {
-      alert(responseData.message);
 sessionStorage.setItem('loginInfo',JSON.stringify(responseData))
 navigate('/bookPage')
     } else {
@@ -176,6 +182,49 @@ navigate('/bookPage')
                 "Login"
               )}
             </Button>
+
+<Box
+  sx={{
+    mt: 3,
+    textAlign: "center",
+  }}
+>
+  <Typography
+    variant="body1"
+    sx={{
+      color: "#6c757d",
+      fontSize: "0.95rem",
+    }}
+  >
+    Don’t have an account?
+  </Typography>
+
+  <Typography
+    onClick={() => navigate("/signup")}
+    sx={{
+      mt: 1,
+      display: "inline-block",
+      cursor: "pointer",
+      fontWeight: 700,
+      fontSize: "1rem",
+
+      background:
+        "linear-gradient(135deg, #4ea8de 0%, #56cfe1 100%)",
+
+      WebkitBackgroundClip: "text",
+      WebkitTextFillColor: "transparent",
+
+      transition: "all 0.3s ease",
+
+      "&:hover": {
+        transform: "translateY(-2px)",
+        opacity: 0.85,
+      },
+    }}
+  >
+    Create New Account
+  </Typography>
+</Box>
           </Box>
         </Paper>
       </Container>

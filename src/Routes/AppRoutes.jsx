@@ -1,23 +1,41 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
 import LoginPage from "../Pages/LoginPage";
 import NotFound from "../Pages/NotFound";
 import BooksPage from "../Pages/BooksPage";
+import SignupPage from "../Pages/SignUpPage";
+import ProtectedRoute from "./ProtectedRoute";
 
 const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-
-        {/* Login Page */}
-        <Route path="/" element={<LoginPage />} />
-
-        {/* Book Page */}
-        <Route path="/bookPage" element={<BooksPage />} />
-
+        {/* Public Routes */}
+        <Route
+          path="/"
+          element={<LoginPage />}
+        />
+        <Route
+          path="/signup"
+          element={<SignupPage />}
+        />
+        {/* Protected Routes */}
+        <Route
+          path="/bookPage"
+          element={
+            <ProtectedRoute>
+              <BooksPage />
+            </ProtectedRoute>
+          }
+        />
         {/* Not Found */}
-        <Route path="*" element={<NotFound />} />
-
+        <Route
+          path="*"
+          element={<NotFound />}
+        />
       </Routes>
     </BrowserRouter>
   );
